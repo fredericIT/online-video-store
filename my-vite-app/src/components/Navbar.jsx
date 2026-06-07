@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Play, User, Search, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -25,18 +26,27 @@ export default function Navbar() {
 
       {/* Center Nav Links */}
       <div className="hidden md:flex items-center gap-8">
-        {["Movies", "Series", "Trending", "Pricing"].map((item, i) => (
-          <motion.a
-            key={item}
-            href="#"
-            className="text-sm font-medium text-text-secondary hover:text-white transition-colors duration-300 relative group"
+        {[
+          { label: "Movies", to: "/dashboard" },
+          { label: "Series", to: "/dashboard" },
+          { label: "Trending", to: "/discover" },
+          { label: "Pricing", to: "/pricing" },
+        ].map((item, i) => (
+          <motion.div
+            key={item.label}
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.1 * (i + 1), duration: 0.4 }}
           >
-            {item}
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-purple-400 group-hover:w-full transition-all duration-300" />
-          </motion.a>
+            <Link
+              to={item.to}
+              className="text-sm font-medium text-text-secondary hover:text-white transition-colors duration-300 relative group"
+              style={{ textDecoration: "none" }}
+            >
+              {item.label}
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-purple-400 group-hover:w-full transition-all duration-300" />
+            </Link>
+          </motion.div>
         ))}
       </div>
 
@@ -49,9 +59,11 @@ export default function Navbar() {
           <Bell className="w-4 h-4" />
           <span className="absolute top-2 right-2 w-2 h-2 bg-purple-500 rounded-full" />
         </Button>
-        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center cursor-pointer hover:shadow-lg hover:shadow-purple-500/25 transition-shadow duration-300">
-          <User className="w-4 h-4 text-white" />
-        </div>
+        <Link to="/signin">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center cursor-pointer hover:shadow-lg hover:shadow-purple-500/25 transition-shadow duration-300">
+            <User className="w-4 h-4 text-white" />
+          </div>
+        </Link>
       </div>
     </motion.nav>
   );

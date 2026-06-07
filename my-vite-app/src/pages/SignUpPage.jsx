@@ -25,7 +25,7 @@ export default function SignUpPage() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      navigate("/");
+      navigate("/signin");
     }, 1500);
   };
 
@@ -259,7 +259,7 @@ export default function SignUpPage() {
           >
             Already have an account?{" "}
             <Link
-              to="/"
+              to="/signin"
               className="text-purple-400 font-semibold hover:text-purple-300 transition-colors"
             >
               Sign In

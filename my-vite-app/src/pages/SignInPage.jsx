@@ -18,7 +18,7 @@ export default function SignInPage() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      navigate("/");
+      navigate("/dashboard");
     }, 1500);
   };
 
