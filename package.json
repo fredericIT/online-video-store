@@ -1,0 +1,11 @@
+{
+  "name": "online-video-store",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd my-vite-app && npm run dev",
+    "build": "cd my-vite-app && npm run build",
+    "lint": "cd my-vite-app && npm run lint",
+    "preview": "cd my-vite-app && npm run preview"
+  }
+}
