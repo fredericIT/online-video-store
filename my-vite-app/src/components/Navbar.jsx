@@ -22,10 +22,9 @@ export default function Navbar() {
             fontSize: "1.6rem",
             fontWeight: 700,
             letterSpacing: "0.14em",
-            background: "linear-gradient(135deg, #818cf8 0%, #a78bfa 40%, #60a5fa 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
+            color: "#ffffff",
+            WebkitTextFillColor: "white",
+            display: "block",
           }}
         >
           STREAM

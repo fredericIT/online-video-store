@@ -77,15 +77,13 @@ export default function DashboardPreview() {
               <div className="flex items-center gap-2 mb-6">
                 <span
                   style={{
-                    fontFamily: "'Permanent Marker', cursive",
-                    fontSize: "0.95rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.12em",
-                    background: "linear-gradient(135deg, #818cf8 0%, #a78bfa 40%, #60a5fa 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
+                      fontFamily: "'Permanent Marker', cursive",
+                      fontSize: "0.95rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.12em",
+                      color: "#ffffff",
+                      WebkitTextFillColor: "white",
+                    }}
                 >
                   STREAM
                 </span>

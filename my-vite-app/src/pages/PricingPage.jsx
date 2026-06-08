@@ -56,7 +56,7 @@ function PricingCard({ plan, onSubscribe }) {
       variants={cardVariants}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="relative rounded-[2rem] p-8 flex flex-col gap-6 transition-all duration-300"
+      className="relative rounded-[2rem] p-8 flex flex-col gap-6 items-center text-center transition-all duration-300"
       style={{
         background: "#ffffff",
         boxShadow: hovered
@@ -65,6 +65,8 @@ function PricingCard({ plan, onSubscribe }) {
         transform: hovered ? "translateY(-4px)" : "translateY(0)",
         flex: "1 1 0",
         minWidth: 0,
+        overflow: "hidden",
+        boxSizing: "border-box",
       }}
     >
       {/* Plan name */}
@@ -92,12 +94,12 @@ function PricingCard({ plan, onSubscribe }) {
       <div className="h-px bg-gray-100" />
 
       {/* Features */}
-      <ul className="flex flex-col gap-4">
+      <ul className="flex flex-col gap-4 items-center">
         {plan.features.map((feat) => (
-          <li key={feat} className="flex items-center justify-between">
+          <li key={feat} className="flex flex-col items-center">
             <span className="text-sm font-medium text-gray-800">{feat}</span>
             <span
-              className="flex-shrink-0 w-[22px] h-[22px] rounded-full flex items-center justify-center"
+              className="mt-2 flex-shrink-0 w-[22px] h-[22px] rounded-full flex items-center justify-center"
               style={{ background: "#d1fae5" }}
             >
               <svg
@@ -130,11 +132,13 @@ function PricingCard({ plan, onSubscribe }) {
                 color: "#ffffff",
                 border: "none",
                 boxShadow: "0 4px 18px rgba(79,70,229,0.35)",
+                marginBottom: "6px",
               }
             : {
                 background: "#ffffff",
                 color: "#9ca3af",
                 border: "1.5px solid #e5e7eb",
+                marginBottom: "6px",
               }
         }
         whileHover={
@@ -250,20 +254,18 @@ export default function PricingPage() {
           >
             <Link to="/">
               <span
-                style={{
-                  fontFamily: "'Permanent Marker', 'Outfit', cursive",
-                  fontSize: "2rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.18em",
-                  background: "linear-gradient(135deg, #818cf8 0%, #a78bfa 40%, #60a5fa 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  display: "block",
-                }}
-              >
-                STREAM
-              </span>
+                  style={{
+                    fontFamily: "'Permanent Marker', 'Outfit', cursive",
+                    fontSize: "2rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.18em",
+                    color: "#ffffff",
+                    WebkitTextFillColor: "white",
+                    display: "block",
+                  }}
+                >
+                  STREAM
+                </span>
             </Link>
           </motion.div>
 

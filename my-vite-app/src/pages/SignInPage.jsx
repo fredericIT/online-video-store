@@ -107,10 +107,8 @@ export default function SignInPage() {
                 fontSize: "2rem",
                 fontWeight: 700,
                 letterSpacing: "0.18em",
-                background: "linear-gradient(135deg, #818cf8 0%, #a78bfa 40%, #60a5fa 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
+                color: "#ffffff",
+                WebkitTextFillColor: "white",
                 textShadow: "none",
                 display: "block",
               }}
@@ -155,9 +153,17 @@ export default function SignInPage() {
             onSubmit={handleSubmit}
             className="rounded-2xl px-8 py-9 space-y-5"
             style={{
-              background: "rgba(255,255,255,0.97)",
+              background: "#ffffff",
               boxShadow:
                 "0 24px 64px rgba(0,0,0,0.38), inset 0 1px 1px rgba(255,255,255,0.6)",
+              overflow: "hidden",
+              boxSizing: "border-box",
+              borderRadius: "20px",
+              paddingTop: "28px",
+              paddingBottom: "28px",
+              paddingLeft: "18px",
+              position: "relative",
+              zIndex: 20,
             }}
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -185,14 +191,14 @@ export default function SignInPage() {
                 required
                 style={{
                   width: "100%",
-                  padding: "11px 16px",
-                  borderRadius: "10px",
+                  padding: "11px 14px",
+                  borderRadius: "8px",
                   border: "1.5px solid #e5e7eb",
                   fontSize: "14px",
                   color: "#374151",
                   outline: "none",
-                  transition: "border-color 0.2s",
-                  background: "#fff",
+                  transition: "border-color 0.2s, box-shadow 0.15s",
+                  background: "#ffffff",
                   boxSizing: "border-box",
                 }}
                 onFocus={(e) => (e.target.style.borderColor = "#6366f1")}
@@ -244,7 +250,8 @@ export default function SignInPage() {
               disabled={loading}
               className="w-full text-white cursor-pointer select-none disabled:opacity-70 transition-all flex items-center justify-center gap-2"
               style={{
-                marginTop: "10px",
+                marginTop: "12px",
+                marginBottom: "6px",
                 padding: "13px 0",
                 borderRadius: "999px",
                 background: "#4f46e5",
@@ -252,7 +259,7 @@ export default function SignInPage() {
                 fontSize: "15px",
                 fontWeight: 600,
                 letterSpacing: "0.01em",
-                boxShadow: "0 4px 18px rgba(79,70,229,0.38)",
+                boxShadow: "0 6px 24px rgba(79,70,229,0.22)",
               }}
               whileHover={{
                 scale: loading ? 1 : 1.02,

@@ -40,10 +40,8 @@ export default function DashboardSidebar({ active = "watch" }) {
           fontSize: "1.5rem",
           fontWeight: 700,
           letterSpacing: "0.14em",
-          background: "linear-gradient(135deg, #818cf8 0%, #a78bfa 40%, #60a5fa 100%)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          backgroundClip: "text",
+          color: "#ffffff",
+          WebkitTextFillColor: "white",
           display: "block",
         }}>STREAM</span>
       </Link>
