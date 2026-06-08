@@ -23,8 +23,17 @@ function Navbar() {
       <div className="absolute left-1/2 -translate-x-1/2">
         <Link to="/">
           <span
-            className="text-2xl font-black tracking-widest text-white"
-            style={{ fontFamily: "'Outfit', sans-serif", letterSpacing: "0.2em" }}
+            style={{
+              fontFamily: "'Permanent Marker', cursive",
+              fontSize: "1.8rem",
+              fontWeight: 700,
+              letterSpacing: "0.14em",
+              background: "linear-gradient(135deg, #818cf8 0%, #a78bfa 40%, #60a5fa 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              display: "block",
+            }}
           >
             STREAM
           </span>

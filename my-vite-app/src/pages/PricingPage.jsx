@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-import { Check, User } from "lucide-react";
 
 // ── Pricing plan data ─────────────────────────────────────────────────────────
 const plans = [
@@ -49,7 +48,7 @@ const cardVariants = {
 };
 
 // ── PricingCard ───────────────────────────────────────────────────────────────
-function PricingCard({ plan, index, onSubscribe }) {
+function PricingCard({ plan, onSubscribe }) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -57,40 +56,34 @@ function PricingCard({ plan, index, onSubscribe }) {
       variants={cardVariants}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="relative rounded-2xl p-6 flex flex-col gap-4 transition-all duration-300"
+      className="relative rounded-[2rem] p-8 flex flex-col gap-6 transition-all duration-300"
       style={{
-        background: plan.highlighted
-          ? "linear-gradient(145deg, rgba(255,255,255,0.97) 0%, rgba(248,246,255,0.97) 100%)"
-          : "rgba(255,255,255,0.96)",
-        boxShadow: plan.highlighted
-          ? hovered
-            ? "0 28px 70px rgba(109,40,217,0.38), 0 0 0 2px rgba(124,58,237,0.3)"
-            : "0 20px 55px rgba(109,40,217,0.28), 0 0 0 1.5px rgba(124,58,237,0.18)"
-          : hovered
-          ? "0 20px 50px rgba(0,0,0,0.22)"
-          : "0 16px 45px rgba(0,0,0,0.15)",
+        background: "#ffffff",
+        boxShadow: hovered
+          ? "0 28px 60px rgba(0,0,0,0.3)"
+          : "0 16px 40px rgba(0,0,0,0.18)",
         transform: hovered ? "translateY(-4px)" : "translateY(0)",
         flex: "1 1 0",
         minWidth: 0,
       }}
     >
       {/* Plan name */}
-      <p
-        className="text-sm font-semibold text-gray-700 tracking-wide"
+      <h3
+        className="text-base font-bold text-gray-900 tracking-wide"
         style={{ fontFamily: "'Inter', sans-serif" }}
       >
         {plan.name}
-      </p>
+      </h3>
 
-      {/* Price */}
-      <div>
+      {/* Price section */}
+      <div className="flex flex-col">
         <span
-          className="text-2xl font-black text-gray-900"
+          className="text-[2.2rem] font-bold text-gray-950 leading-none tracking-tight"
           style={{ fontFamily: "'Outfit', sans-serif" }}
         >
           {plan.price}
         </span>
-        <span className="text-xs text-amber-500 font-semibold ml-1">
+        <span className="text-xs text-gray-400 mt-1 font-medium">
           {plan.period}
         </span>
       </div>
@@ -99,19 +92,27 @@ function PricingCard({ plan, index, onSubscribe }) {
       <div className="h-px bg-gray-100" />
 
       {/* Features */}
-      <ul className="flex flex-col gap-3">
+      <ul className="flex flex-col gap-4">
         {plan.features.map((feat) => (
           <li key={feat} className="flex items-center justify-between">
-            <span className="text-sm text-gray-700">{feat}</span>
+            <span className="text-sm font-medium text-gray-800">{feat}</span>
             <span
-              className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center"
-              style={{
-                background: plan.highlighted
-                  ? "linear-gradient(135deg, #6d28d9, #7c3aed)"
-                  : "linear-gradient(135deg, #6d28d9, #7c3aed)",
-              }}
+              className="flex-shrink-0 w-[22px] h-[22px] rounded-full flex items-center justify-center"
+              style={{ background: "#d1fae5" }}
             >
-              <Check className="w-3 h-3 text-white" strokeWidth={3} />
+              <svg
+                className="w-3.5 h-3.5 text-emerald-600"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3.5"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
             </span>
           </li>
         ))}
@@ -121,28 +122,32 @@ function PricingCard({ plan, index, onSubscribe }) {
       <motion.button
         id={`subscribe-${plan.id}-btn`}
         onClick={onSubscribe}
-        className="mt-2 w-full py-3 rounded-full font-semibold text-sm cursor-pointer select-none transition-all duration-200"
+        className="mt-2 w-full py-3.5 rounded-full font-semibold text-sm cursor-pointer select-none transition-all duration-200"
         style={
           plan.highlighted
             ? {
-                background:
-                  "linear-gradient(135deg, #5b21b6 0%, #7c3aed 50%, #6d28d9 100%)",
-                color: "#fff",
-                boxShadow: "0 4px 18px rgba(124,58,237,0.45)",
+                background: "#4f46e5",
+                color: "#ffffff",
+                border: "none",
+                boxShadow: "0 4px 18px rgba(79,70,229,0.35)",
               }
             : {
-                background: "transparent",
-                color: "#374151",
-                border: "1.5px solid #d1d5db",
+                background: "#ffffff",
+                color: "#9ca3af",
+                border: "1.5px solid #e5e7eb",
               }
         }
         whileHover={
           plan.highlighted
             ? {
                 scale: 1.02,
-                boxShadow: "0 6px 26px rgba(124,58,237,0.6)",
+                background: "#4338ca",
               }
-            : { scale: 1.02, borderColor: "#7c3aed", color: "#6d28d9" }
+            : {
+                scale: 1.02,
+                borderColor: "#9ca3af",
+                color: "#4b5563",
+              }
         }
         whileTap={{ scale: 0.97 }}
       >
@@ -167,10 +172,10 @@ export default function PricingPage() {
     >
       {/* ── LEFT PANEL ────────────────────────────────────────────── */}
       <div className="hidden md:flex md:w-[30%] relative flex-col justify-end overflow-hidden">
-        {/* Cinematic background */}
+        {/* Cozy living room / TV viewing background */}
         <img
           src="/images/movie4.png"
-          alt="Cinematic atmosphere"
+          alt="Cozy viewing atmosphere"
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
 
@@ -179,15 +184,15 @@ export default function PricingPage() {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(5,8,20,0.18) 0%, rgba(5,8,20,0.48) 45%, rgba(5,8,20,0.93) 100%)",
+              "linear-gradient(to bottom, rgba(5,8,20,0.15) 0%, rgba(5,8,20,0.42) 45%, rgba(5,8,20,0.90) 100%)",
           }}
         />
 
-        {/* Subtle teal-purple tint */}
+        {/* Subtle orange/sunset warm tint */}
         <div
-          className="absolute inset-0 opacity-18"
+          className="absolute inset-0 opacity-25"
           style={{
-            background: "linear-gradient(160deg, #0d9488 0%, #4c1d95 100%)",
+            background: "linear-gradient(160deg, #c0392b 0%, #d35400 100%)",
           }}
         />
 
@@ -245,10 +250,16 @@ export default function PricingPage() {
           >
             <Link to="/">
               <span
-                className="text-2xl font-black tracking-widest text-white hover:text-purple-300 transition-colors"
                 style={{
-                  fontFamily: "'Outfit', sans-serif",
-                  letterSpacing: "0.2em",
+                  fontFamily: "'Permanent Marker', 'Outfit', cursive",
+                  fontSize: "2rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.18em",
+                  background: "linear-gradient(135deg, #818cf8 0%, #a78bfa 40%, #60a5fa 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  display: "block",
                 }}
               >
                 STREAM
@@ -261,17 +272,20 @@ export default function PricingPage() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.2 }}
-            className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center cursor-pointer hover:shadow-lg hover:shadow-white/10 transition-shadow duration-300"
-          >
-            <User className="w-5 h-5 text-white" />
-          </motion.div>
+            className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer hover:shadow-lg hover:shadow-white/10 transition-shadow duration-300"
+            style={{
+              background: "#d1d5db",
+              border: "1.5px solid #ffffff",
+            }}
+          />
         </div>
 
         {/* ── CENTER CONTENT ──────────────────────────────────────── */}
         <div className="relative z-10 flex flex-col items-center justify-center flex-1">
           {/* Eyebrow label */}
           <motion.p
-            className="text-xs font-bold uppercase tracking-[0.28em] text-teal-400 mb-3"
+            className="text-xs font-bold uppercase tracking-[0.28em] mb-3 text-center"
+            style={{ color: "#4fc3f7" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.25 }}
@@ -292,19 +306,24 @@ export default function PricingPage() {
 
           {/* Pricing cards */}
           <motion.div
-            className="w-full max-w-[640px] grid grid-cols-1 sm:grid-cols-2 gap-5"
+            className="w-full max-w-[680px] grid grid-cols-1 sm:grid-cols-2 gap-6"
             variants={containerVariants}
             initial="hidden"
             animate="show"
           >
-            {plans.map((plan, i) => (
-              <PricingCard key={plan.id} plan={plan} index={i} onSubscribe={handleSubscribe} />
+            {plans.map((plan) => (
+              <PricingCard
+                key={plan.id}
+                plan={plan}
+                onSubscribe={handleSubscribe}
+              />
             ))}
           </motion.div>
 
           {/* Footer nav hint */}
           <motion.p
-            className="text-center text-sm text-gray-500 mt-6"
+            className="text-center text-sm mt-8"
+            style={{ color: "rgba(255,255,255,0.6)" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
@@ -312,7 +331,8 @@ export default function PricingPage() {
             Already subscribed?{" "}
             <Link
               to="/signin"
-              className="text-purple-400 font-semibold hover:text-purple-300 transition-colors"
+              className="font-semibold transition-colors"
+              style={{ color: "#a78bfa" }}
             >
               Sign In
             </Link>

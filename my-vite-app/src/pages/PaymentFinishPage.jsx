@@ -19,7 +19,7 @@ export default function PaymentFinishPage() {
     <>
       {/* ── Google Font for sketch-style logo ─────────────────────── */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@700&family=Outfit:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Outfit:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap');
       `}</style>
 
       <div
@@ -75,18 +75,16 @@ export default function PaymentFinishPage() {
           <Link to="/">
             <span
               style={{
-                fontFamily: "'Cabin Sketch', cursive",
+                fontFamily: "'Permanent Marker', cursive",
                 fontSize: "2rem",
                 fontWeight: 700,
-                color: "#ffffff",
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                textShadow: "0 0 30px rgba(255,255,255,0.08)",
-                transition: "color 0.2s",
+                letterSpacing: "0.14em",
+                background: "linear-gradient(135deg, #818cf8 0%, #a78bfa 40%, #60a5fa 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
                 display: "block",
               }}
-              onMouseEnter={(e) => (e.target.style.color = "#c4b5fd")}
-              onMouseLeave={(e) => (e.target.style.color = "#ffffff")}
             >
               STREAM
             </span>

@@ -75,10 +75,18 @@ export default function DashboardPreview() {
             {/* Sidebar */}
             <div className="hidden md:flex flex-col w-52 border-r border-white/5 p-4 gap-1">
               <div className="flex items-center gap-2 mb-6">
-                <div className="w-6 h-6 rounded-md bg-gradient-to-br from-teal-400 to-cyan-500 flex items-center justify-center">
-                  <Play className="w-3 h-3 text-white fill-white" />
-                </div>
-                <span className="text-sm font-display font-bold text-white tracking-wide">
+                <span
+                  style={{
+                    fontFamily: "'Permanent Marker', cursive",
+                    fontSize: "0.95rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.12em",
+                    background: "linear-gradient(135deg, #818cf8 0%, #a78bfa 40%, #60a5fa 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
                   STREAM
                 </span>
               </div>

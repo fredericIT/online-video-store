@@ -16,10 +16,18 @@ export default function Navbar() {
         className="flex items-center gap-2"
         whileHover={{ scale: 1.02 }}
       >
-        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center">
-          <Play className="w-4 h-4 text-white fill-white" />
-        </div>
-        <span className="text-xl font-display font-bold tracking-wider text-white">
+        <span
+          style={{
+            fontFamily: "'Permanent Marker', cursive",
+            fontSize: "1.6rem",
+            fontWeight: 700,
+            letterSpacing: "0.14em",
+            background: "linear-gradient(135deg, #818cf8 0%, #a78bfa 40%, #60a5fa 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
+        >
           STREAM
         </span>
       </motion.div>

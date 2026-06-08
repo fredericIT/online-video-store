@@ -3,16 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { Layers, Globe, Heart, Monitor, Gift, CreditCard, User, LogOut } from "lucide-react";
 
 const NAV_MAIN = [
-  { id: "watch",     label: "Watch",           icon: Layers,  route: "/dashboard" },
-  { id: "discover",  label: "Discover",         icon: Globe,   route: "/discover"  },
-  { id: "favorites", label: "My Favorites",     icon: Heart,   badge: 6            },
-  { id: "playlist",  label: "Playlist",         icon: Monitor                      },
-  { id: "gift",      label: "Your Gift",        icon: Gift                         },
+  { id: "watch", label: "Watch", icon: Layers, route: "/dashboard" },
+  { id: "discover", label: "Discover", icon: Globe, route: "/discover" },
+  { id: "favorites", label: "My Favorites", icon: Heart, badge: 6 },
+  { id: "playlist", label: "Playlist", icon: Monitor },
+  { id: "gift", label: "Your Gift", icon: Gift },
 ];
 const NAV_SEC = [
-  { id: "sub",      label: "Subscription",     icon: CreditCard, route: "/subscription" },
-  { id: "settings", label: "Account Settings", icon: User,       route: "/account-settings" },
-  { id: "logout",   label: "Log Out",          icon: LogOut,     route: "/signin"   },
+  { id: "sub", label: "Subscription", icon: CreditCard, route: "/subscription" },
+  { id: "settings", label: "Account Settings", icon: User, route: "/account-settings" },
+  { id: "logout", label: "Log Out", icon: LogOut, route: "/signin" },
 ];
 
 export default function DashboardSidebar({ active = "watch" }) {
@@ -36,9 +36,15 @@ export default function DashboardSidebar({ active = "watch" }) {
       {/* Logo */}
       <Link to="/" style={{ textDecoration: "none", marginBottom: 28, display: "block" }}>
         <span style={{
-          fontFamily: "'Cabin Sketch', cursive",
-          fontSize: "1.5rem", fontWeight: 700,
-          color: "#fff", letterSpacing: "0.1em",
+          fontFamily: "'Permanent Marker', cursive",
+          fontSize: "1.5rem",
+          fontWeight: 700,
+          letterSpacing: "0.14em",
+          background: "linear-gradient(135deg, #818cf8 0%, #a78bfa 40%, #60a5fa 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+          display: "block",
         }}>STREAM</span>
       </Link>
 
