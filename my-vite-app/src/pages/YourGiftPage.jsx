@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import { Check, Layers } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Check, Layers, Copy, CheckCircle } from "lucide-react";
 import DashboardSidebar from "../components/DashboardSidebar";
 
 // ── Font ──────────────────────────────────────────────────────────────────────
@@ -15,8 +14,10 @@ const FEATURES = [
   "Up To 8K Quality",
   "All Platforms Streaming",
   "900+ Movies Available",
-  "120 Origin Countries",
+  "Up to 20 languages translation",
 ];
+
+const MY_CODE = "0090";
 
 // ── Progress bar ──────────────────────────────────────────────────────────────
 function ProgressBar({ current = 11, total = 30 }) {
@@ -67,8 +68,26 @@ function Feature({ label }) {
 }
 
 // ── Page ──────────────────────────────────────────────────────────────────────
-export default function SubscriptionPage() {
-  const navigate = useNavigate();
+export default function YourGiftPage() {
+  const [friendCode, setFriendCode] = useState("");
+  const [copied, setCopied] = useState(false);
+  const [verifyStatus, setVerifyStatus] = useState(null); // null | "success" | "error"
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(`Use ${MY_CODE} code to share your plan to your friends`).catch(() => {});
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2200);
+  };
+
+  const handleVerify = () => {
+    if (!friendCode.trim()) return;
+    if (friendCode.trim().toLowerCase() === "0090") {
+      setVerifyStatus("error"); // same as own code — demo
+    } else {
+      setVerifyStatus("success");
+    }
+    setTimeout(() => setVerifyStatus(null), 3000);
+  };
 
   return (
     <>
@@ -79,7 +98,7 @@ export default function SubscriptionPage() {
         fontFamily: "'Inter', sans-serif",
       }}>
         {/* ── Sidebar ──────────────────────────────────────────── */}
-        <DashboardSidebar active="sub" />
+        <DashboardSidebar active="gift" />
 
         {/* ── Main — full background image ────────────────────── */}
         <main style={{
@@ -99,11 +118,12 @@ export default function SubscriptionPage() {
             backgroundRepeat: "no-repeat",
           }} />
 
-          {/* ── Dark overlay for legibility ───────────────────── */}
+          {/* ── Dark / purple overlay for legibility ──────────── */}
           <div style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(135deg, rgba(7,8,26,0.82) 0%, rgba(13,14,40,0.78) 50%, rgba(7,8,26,0.88) 100%)",
+            background:
+              "linear-gradient(135deg, rgba(7,8,26,0.78) 0%, rgba(40,10,70,0.68) 50%, rgba(7,8,26,0.88) 100%)",
           }} />
 
           {/* ── Scrollable content layer ─────────────────────── */}
@@ -130,7 +150,7 @@ export default function SubscriptionPage() {
                   fontFamily: "'Outfit', sans-serif",
                   marginBottom: 4,
                 }}>
-                  Subscription
+                  Share or be shared
                 </h1>
                 <p style={{ color: "rgba(180,185,220,0.55)", fontSize: "0.78rem" }}>
                   Spend to get more good memories
@@ -165,7 +185,7 @@ export default function SubscriptionPage() {
                 WebkitBackdropFilter: "blur(18px)",
                 borderRadius: 20,
                 border: "1px solid rgba(255,255,255,0.1)",
-                padding: "28px 28px 24px",
+                padding: "28px 28px 28px",
                 boxShadow: "0 24px 60px rgba(0,0,0,0.55)",
               }}
             >
@@ -197,93 +217,129 @@ export default function SubscriptionPage() {
                 {FEATURES.map(f => <Feature key={f} label={f} />)}
               </div>
 
-              {/* ── Make a Renewal button ───────────────────── */}
+              {/* ── Share code button ───────────────────────── */}
               <motion.button
-                id="renewal-btn"
+                id="share-code-btn"
+                onClick={handleCopy}
                 whileHover={{ scale: 1.02, boxShadow: "0 8px 32px rgba(124,58,237,0.65)" }}
                 whileTap={{ scale: 0.97 }}
                 style={{
                   width: "100%", padding: "13px 0",
                   borderRadius: 99, border: "none", cursor: "pointer",
                   background: "linear-gradient(135deg, #5b21b6 0%, #7c3aed 50%, #6d28d9 100%)",
-                  color: "#fff", fontSize: "0.9rem", fontWeight: 600,
+                  color: "#fff", fontSize: "0.88rem", fontWeight: 600,
                   fontFamily: "'Inter', sans-serif",
                   boxShadow: "0 4px 22px rgba(124,58,237,0.48)",
-                  marginBottom: 12,
+                  marginBottom: 14,
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 9,
+                  transition: "all 0.2s",
                 }}
               >
-                Make a Renewal
+                <AnimatePresence mode="wait">
+                  {copied ? (
+                    <motion.span
+                      key="copied"
+                      initial={{ opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -4 }}
+                      style={{ display: "flex", alignItems: "center", gap: 8 }}
+                    >
+                      <CheckCircle size={16} />
+                      Copied!
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="share"
+                      initial={{ opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -4 }}
+                      style={{ display: "flex", alignItems: "center", gap: 8 }}
+                    >
+                      <Copy size={15} />
+                      Use {MY_CODE} code to share your plan to your friends
+                    </motion.span>
+                  )}
+                </AnimatePresence>
               </motion.button>
 
-              {/* ── Change Plan button ──────────────────────── */}
-              <motion.button
-                id="change-plan-btn"
-                whileHover={{ borderColor: "rgba(180,185,220,0.5)", color: "#fff" }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => navigate("/pricing")}
-                style={{
-                  width: "100%", padding: "12px 0",
-                  borderRadius: 99, cursor: "pointer",
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1.5px solid rgba(255,255,255,0.14)",
-                  color: "rgba(180,185,220,0.75)",
-                  fontSize: "0.9rem", fontWeight: 500,
-                  fontFamily: "'Inter', sans-serif",
-                  marginBottom: 0, transition: "all 0.2s",
-                }}
-              >
-                Change Plan
-              </motion.button>
-            </motion.div>
+              {/* ── Friend code input row ───────────────────── */}
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                background: "rgba(255,255,255,0.06)",
+                border: verifyStatus === "success"
+                  ? "1.5px solid #0d9488"
+                  : verifyStatus === "error"
+                  ? "1.5px solid #ef4444"
+                  : "1.5px solid rgba(255,255,255,0.13)",
+                borderRadius: 99,
+                padding: "0 18px",
+                transition: "border-color 0.25s",
+              }}>
+                <input
+                  id="friend-code-input"
+                  type="text"
+                  placeholder="Enter a code shared from your friend"
+                  value={friendCode}
+                  onChange={e => { setFriendCode(e.target.value); setVerifyStatus(null); }}
+                  onKeyDown={e => e.key === "Enter" && handleVerify()}
+                  style={{
+                    flex: 1,
+                    background: "transparent",
+                    border: "none",
+                    outline: "none",
+                    color: "rgba(180,185,220,0.75)",
+                    fontSize: "0.81rem",
+                    fontFamily: "'Inter', sans-serif",
+                    padding: "12px 0",
+                    minWidth: 0,
+                  }}
+                />
+                <motion.button
+                  id="verify-btn"
+                  onClick={handleVerify}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    color: verifyStatus === "success" ? "#0d9488" : verifyStatus === "error" ? "#ef4444" : "#facc15",
+                    fontSize: "0.83rem",
+                    fontWeight: 700,
+                    fontFamily: "'Inter', sans-serif",
+                    flexShrink: 0,
+                    padding: "0 0 0 12px",
+                    transition: "color 0.2s",
+                    letterSpacing: "0.01em",
+                  }}
+                >
+                  {verifyStatus === "success" ? "✓ Applied!" : verifyStatus === "error" ? "Invalid" : "Verify"}
+                </motion.button>
+              </div>
 
-            {/* ── Danger Zone card ───────────────────────────── */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.18 }}
-              style={{
-                maxWidth: 460,
-                marginTop: 20,
-                borderRadius: 18,
-                padding: "22px 28px",
-                background: "rgba(13,14,40,0.65)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)",
-                border: "1px solid rgba(239,68,68,0.2)",
-                boxShadow: "0 12px 40px rgba(0,0,0,0.4)",
-              }}
-            >
-              <h3 style={{
-                color: "#ef4444",
-                fontSize: "0.95rem",
-                fontWeight: 700,
-                fontFamily: "'Outfit', sans-serif",
-                marginBottom: 10,
-              }}>
-                Danger Zone
-              </h3>
-              <p style={{
-                color: "rgba(180,185,220,0.62)",
-                fontSize: "0.79rem",
-                lineHeight: 1.75,
-                marginBottom: 18,
-              }}>
-                If you wish to stop subscribe our movies please continue by clicking the button below. Make sure that you have read our terms &amp; conditions beforehand.
-              </p>
-              <motion.button
-                id="stop-subscribe-btn"
-                whileHover={{ scale: 1.04, boxShadow: "0 4px 22px rgba(239,68,68,0.5)" }}
-                whileTap={{ scale: 0.96 }}
-                style={{
-                  padding: "10px 26px", borderRadius: 99, border: "none",
-                  cursor: "pointer", background: "#ef4444",
-                  color: "#fff", fontSize: "0.83rem", fontWeight: 600,
-                  fontFamily: "'Inter', sans-serif",
-                  boxShadow: "0 2px 14px rgba(239,68,68,0.38)",
-                }}
-              >
-                Stop Subscribe
-              </motion.button>
+              {/* ── Micro status message ────────────────────── */}
+              <AnimatePresence>
+                {verifyStatus && (
+                  <motion.p
+                    key="status"
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    style={{
+                      marginTop: 8,
+                      fontSize: "0.73rem",
+                      fontFamily: "'Inter', sans-serif",
+                      color: verifyStatus === "success" ? "#0d9488" : "#ef4444",
+                      paddingLeft: 6,
+                    }}
+                  >
+                    {verifyStatus === "success"
+                      ? "Friend's code applied! Your plan has been extended."
+                      : "That code is invalid or has already been used."}
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </motion.div>
 
           </div>

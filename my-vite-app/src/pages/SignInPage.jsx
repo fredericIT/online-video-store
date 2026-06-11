@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
+import { authenticateUser } from "../lib/auth";
 
 export default function SignInPage() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -14,170 +16,233 @@ export default function SignInPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
+    setError("");
     setTimeout(() => {
+      const res = authenticateUser(form.email, form.password);
       setLoading(false);
+      if (!res.success) {
+        setError(res.message || "Invalid credentials");
+        return;
+      }
       navigate("/pricing");
-    }, 1500);
+    }, 500);
   };
 
   return (
     <div
-      className="min-h-screen flex"
-      style={{ fontFamily: "'Inter', sans-serif" }}
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        fontFamily: "'Inter', sans-serif",
+      }}
     >
-      {/* ── LEFT PANEL ──────────────────────────────────────────── */}
-      <div className="hidden md:flex md:w-[30%] relative flex-col justify-end overflow-hidden">
-        {/* Background image — outdoor cinema with palm trees */}
+      {/* ── LEFT PANEL — Geometric Pattern Image ──────────────────── */}
+      <div
+        style={{
+          display: "none",
+          width: "28%",
+          position: "relative",
+          overflow: "hidden",
+        }}
+        className="left-panel"
+      >
         <img
-          src="/images/movie2.png"
-          alt="Outdoor cinema experience"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
-
-        {/* Dark gradient overlay */}
-        <div
-          className="absolute inset-0"
+          src="/images/geometric-pattern.png"
+          alt="Geometric pattern"
           style={{
-            background:
-              "linear-gradient(to bottom, rgba(5,8,20,0.15) 0%, rgba(5,8,20,0.42) 45%, rgba(5,8,20,0.90) 100%)",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
+            opacity: 0.18,
           }}
         />
-
-        {/* Subtle tint */}
+        {/* Soft dark overlay */}
         <div
-          className="absolute inset-0 opacity-20"
-          style={{ background: "linear-gradient(170deg, #0d9488 0%, #4c1d95 100%)" }}
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "linear-gradient(180deg, rgba(8,6,28,0.45) 0%, rgba(30,10,80,0.35) 50%, rgba(8,6,28,0.55) 100%)",
+          }}
         />
-
-        {/* Testimonial */}
-        <motion.div
-          className="relative z-10 p-8 pb-10"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-        >
-          <p className="text-white/90 text-sm leading-relaxed mb-4">
-            Strean helps us to maintain our relationship to become much much
-            better than previously
-          </p>
-          <p className="text-white font-bold text-sm tracking-wide">
-            Janne Malayika
-          </p>
-        </motion.div>
       </div>
 
-      {/* ── RIGHT PANEL ─────────────────────────────────────────── */}
+      {/* ── RIGHT PANEL — Main Content ────────────────────────────── */}
       <div
-        className="flex-1 flex flex-col items-center justify-center px-6 py-12 relative overflow-hidden"
         style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "48px 24px",
+          position: "relative",
+          overflow: "hidden",
           background:
-            "linear-gradient(135deg, #08091a 0%, #0d0a20 50%, #0a0d1e 100%)",
+            "linear-gradient(135deg, #080c1a 0%, #0c0a1e 55%, #0a0e1c 100%)",
         }}
       >
-        {/* Purple glow blob — bottom right */}
+        {/* Purple glow — bottom right */}
         <div
-          className="absolute -right-32 bottom-0 w-[560px] h-[560px] rounded-full pointer-events-none"
           style={{
+            position: "absolute",
+            right: "-80px",
+            bottom: "0",
+            width: "500px",
+            height: "500px",
+            borderRadius: "50%",
+            pointerEvents: "none",
             background:
-              "radial-gradient(circle, rgba(109,40,217,0.24) 0%, transparent 70%)",
-            filter: "blur(70px)",
+              "radial-gradient(circle, rgba(140,40,220,0.25) 0%, transparent 70%)",
+            filter: "blur(72px)",
           }}
         />
-        {/* Teal glow blob — top left */}
+        {/* Pink/red glow — bottom center */}
         <div
-          className="absolute -left-24 top-0 w-[320px] h-[320px] rounded-full pointer-events-none"
           style={{
+            position: "absolute",
+            right: "15%",
+            bottom: "-60px",
+            width: "400px",
+            height: "400px",
+            borderRadius: "50%",
+            pointerEvents: "none",
             background:
-              "radial-gradient(circle, rgba(13,148,136,0.1) 0%, transparent 70%)",
-            filter: "blur(55px)",
+              "radial-gradient(circle, rgba(200,50,100,0.15) 0%, transparent 70%)",
+            filter: "blur(60px)",
           }}
         />
-
-        {/* STREAM logo — top center */}
-        <motion.div
-          className="absolute top-8 left-1/2 -translate-x-1/2"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <Link to="/">
-            <span
-              style={{
-                fontFamily: "'Permanent Marker', 'Outfit', cursive",
-                fontSize: "2rem",
-                fontWeight: 700,
-                letterSpacing: "0.18em",
-                color: "#ffffff",
-                WebkitTextFillColor: "white",
-                textShadow: "none",
-                display: "block",
-              }}
-            >
-              STREAM
-            </span>
-          </Link>
-        </motion.div>
+        {/* Subtle teal glow — top left */}
+        <div
+          style={{
+            position: "absolute",
+            left: "-60px",
+            top: "0",
+            width: "280px",
+            height: "280px",
+            borderRadius: "50%",
+            pointerEvents: "none",
+            background:
+              "radial-gradient(circle, rgba(13,148,136,0.08) 0%, transparent 70%)",
+            filter: "blur(50px)",
+          }}
+        />
 
         {/* Form container */}
         <motion.div
-          className="relative z-10 w-full max-w-md"
+          style={{
+            position: "relative",
+            zIndex: 10,
+            width: "100%",
+            maxWidth: "440px",
+          }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          {/* Header */}
-          <div className="text-center mb-8">
+          {/* ── MENYA AMATEKA Logo ─────── */}
+          <motion.div
+            style={{ textAlign: "center", marginBottom: "28px" }}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <span
+                style={{
+                  fontFamily: "'Permanent Marker', cursive",
+                  fontSize: "2rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.18em",
+                  color: "#7c3aed",
+                  textShadow: "0 0 30px rgba(124, 58, 237, 0.4)",
+                  display: "block",
+                }}
+              >
+                MENYA AMATEKA
+              </span>
+            </Link>
+          </motion.div>
+
+          {/* ── Header ─────────────── */}
+          <div style={{ textAlign: "center", marginBottom: "32px" }}>
             <motion.p
-              className="text-xs font-bold uppercase tracking-[0.28em] mb-3"
-              style={{ color: "#4fc3f7" }}
+              style={{
+                fontSize: "0.7rem",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.3em",
+                color: "#06b6d4",
+                marginBottom: "12px",
+              }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.25 }}
+              transition={{ delay: 0.2 }}
             >
-              Start Your Day
+              START YOUR DAY
             </motion.p>
             <motion.h1
-              className="text-3xl md:text-4xl font-bold text-white"
-              style={{ fontFamily: "'Outfit', sans-serif" }}
+              style={{
+                fontSize: "2rem",
+                fontWeight: 700,
+                color: "#ffffff",
+                fontFamily: "'Outfit', sans-serif",
+                margin: 0,
+              }}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35 }}
+              transition={{ delay: 0.3 }}
             >
               Watch New Videos
             </motion.h1>
           </div>
 
-          {/* White card form */}
+          {/* ── White Card Form ─────── */}
           <motion.form
             id="signin-form"
             onSubmit={handleSubmit}
-            className="rounded-2xl px-8 py-9 space-y-5"
             style={{
               background: "#ffffff",
+              borderRadius: "16px",
+              padding: "28px 28px 24px",
               boxShadow:
                 "0 24px 64px rgba(0,0,0,0.38), inset 0 1px 1px rgba(255,255,255,0.6)",
-              overflow: "hidden",
-              boxSizing: "border-box",
-              borderRadius: "20px",
-              paddingTop: "28px",
-              paddingBottom: "28px",
-              paddingLeft: "18px",
-              position: "relative",
-              zIndex: 20,
+              display: "flex",
+              flexDirection: "column",
+              gap: "18px",
             }}
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
+            transition={{ delay: 0.35, duration: 0.5 }}
           >
+            {error && (
+              <div
+                style={{
+                  fontSize: "13px",
+                  color: "#dc2626",
+                  marginBottom: "-8px",
+                }}
+              >
+                {error}
+              </div>
+            )}
+
             {/* Email */}
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.45 }}
+              transition={{ delay: 0.4 }}
             >
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-800 mb-2"
+                style={{
+                  display: "block",
+                  fontSize: "13px",
+                  fontWeight: 500,
+                  color: "#374151",
+                  marginBottom: "6px",
+                }}
               >
                 Email Address
               </label>
@@ -197,9 +262,10 @@ export default function SignInPage() {
                   fontSize: "14px",
                   color: "#374151",
                   outline: "none",
-                  transition: "border-color 0.2s, box-shadow 0.15s",
+                  transition: "border-color 0.2s",
                   background: "#ffffff",
                   boxSizing: "border-box",
+                  fontFamily: "'Inter', sans-serif",
                 }}
                 onFocus={(e) => (e.target.style.borderColor = "#6366f1")}
                 onBlur={(e) => (e.target.style.borderColor = "#e5e7eb")}
@@ -210,11 +276,17 @@ export default function SignInPage() {
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
+              transition={{ delay: 0.45 }}
             >
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-800 mb-2"
+                style={{
+                  display: "block",
+                  fontSize: "13px",
+                  fontWeight: 500,
+                  color: "#374151",
+                  marginBottom: "6px",
+                }}
               >
                 Password
               </label>
@@ -228,15 +300,16 @@ export default function SignInPage() {
                 required
                 style={{
                   width: "100%",
-                  padding: "11px 16px",
-                  borderRadius: "10px",
+                  padding: "11px 14px",
+                  borderRadius: "8px",
                   border: "1.5px solid #e5e7eb",
                   fontSize: "14px",
                   color: "#374151",
                   outline: "none",
                   transition: "border-color 0.2s",
-                  background: "#fff",
+                  background: "#ffffff",
                   boxSizing: "border-box",
+                  fontFamily: "'Inter', sans-serif",
                 }}
                 onFocus={(e) => (e.target.style.borderColor = "#6366f1")}
                 onBlur={(e) => (e.target.style.borderColor = "#e5e7eb")}
@@ -248,34 +321,44 @@ export default function SignInPage() {
               id="continue-signin-btn"
               type="submit"
               disabled={loading}
-              className="w-full text-white cursor-pointer select-none disabled:opacity-70 transition-all flex items-center justify-center gap-2"
               style={{
-                marginTop: "12px",
-                marginBottom: "6px",
+                width: "100%",
+                marginTop: "4px",
                 padding: "13px 0",
                 borderRadius: "999px",
-                background: "#4f46e5",
+                background:
+                  "linear-gradient(135deg, #6366f1 0%, #7c3aed 50%, #6366f1 100%)",
                 border: "none",
                 fontSize: "15px",
                 fontWeight: 600,
                 letterSpacing: "0.01em",
-                boxShadow: "0 6px 24px rgba(79,70,229,0.22)",
+                color: "#ffffff",
+                cursor: "pointer",
+                boxShadow: "0 6px 24px rgba(99,102,241,0.3)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
+                fontFamily: "'Inter', sans-serif",
+                opacity: loading ? 0.7 : 1,
+                transition: "all 0.2s",
               }}
               whileHover={{
                 scale: loading ? 1 : 1.02,
-                background: "#4338ca",
+                boxShadow: "0 8px 32px rgba(99,102,241,0.4)",
               }}
               whileTap={{ scale: loading ? 1 : 0.97 }}
             >
               {loading ? (
                 <>
                   <svg
-                    className="animate-spin w-4 h-4"
+                    className="animate-spin"
+                    style={{ width: "16px", height: "16px" }}
                     viewBox="0 0 24 24"
                     fill="none"
                   >
                     <circle
-                      className="opacity-25"
+                      style={{ opacity: 0.25 }}
                       cx="12"
                       cy="12"
                       r="10"
@@ -283,7 +366,7 @@ export default function SignInPage() {
                       strokeWidth="4"
                     />
                     <path
-                      className="opacity-75"
+                      style={{ opacity: 0.75 }}
                       fill="currentColor"
                       d="M4 12a8 8 0 018-8v8z"
                     />
@@ -298,8 +381,12 @@ export default function SignInPage() {
 
           {/* Create account link */}
           <motion.div
-            className="text-center text-sm mt-6"
-            style={{ color: "rgba(255,255,255,0.6)" }}
+            style={{
+              textAlign: "center",
+              fontSize: "13px",
+              marginTop: "20px",
+              color: "rgba(255,255,255,0.6)",
+            }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
@@ -307,14 +394,59 @@ export default function SignInPage() {
             Don't have an account?{" "}
             <Link
               to="/signup"
-              className="font-semibold transition-colors"
-              style={{ color: "#a78bfa" }}
+              style={{
+                fontWeight: 600,
+                color: "#a78bfa",
+                textDecoration: "none",
+                transition: "color 0.2s",
+              }}
             >
               Sign Up
             </Link>
           </motion.div>
         </motion.div>
+
+        {/* ── Bottom-right cultural text ─────── */}
+        <motion.div
+          style={{
+            position: "absolute",
+            bottom: "28px",
+            right: "32px",
+            textAlign: "right",
+            zIndex: 5,
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 0.6 }}
+        >
+          <p
+            style={{
+              fontFamily: "'Permanent Marker', cursive",
+              fontSize: "1.05rem",
+              letterSpacing: "0.14em",
+              lineHeight: 1.7,
+              color: "#ffffff",
+              textShadow:
+                "0 0 18px rgba(6,182,212,0.9), 0 0 40px rgba(6,182,212,0.5), 0 2px 6px rgba(0,0,0,0.8)",
+              margin: 0,
+              fontWeight: 700,
+            }}
+          >
+            DUKUNDE UMUCO WACU
+            <br />
+            UTAZAVAHO UCIKA.
+          </p>
+        </motion.div>
       </div>
+
+      {/* Responsive left panel styles */}
+      <style>{`
+        @media (min-width: 768px) {
+          .left-panel {
+            display: block !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

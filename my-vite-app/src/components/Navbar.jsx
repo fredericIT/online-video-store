@@ -9,13 +9,45 @@ export default function Navbar() {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4 bg-bg-dark/80 backdrop-blur-xl border-b border-white/5"
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4 bg-bg-dark/80 backdrop-blur-xl border-b border-rwanda-yellow/20"
     >
-      {/* Logo */}
+      {/* Logo - Rwandan Cultural Icon */}
       <motion.div
         className="flex items-center gap-2"
         whileHover={{ scale: 1.02 }}
       >
+        <div className="relative">
+          <svg
+            width="40"
+            height="40"
+            viewBox="0 0 40 40"
+            className="drop-shadow-lg"
+          >
+            {/* Rwandan Sun Symbol */}
+            <circle cx="20" cy="20" r="18" fill="#00A1DE" />
+            <circle cx="20" cy="20" r="14" fill="#FEDD00" />
+            <circle cx="20" cy="20" r="10" fill="#00A651" />
+            {/* Traditional Pattern */}
+            <path
+              d="M20 8 L22 12 L26 12 L23 15 L24 19 L20 17 L16 19 L17 15 L14 12 L18 12 Z"
+              fill="#ffffff"
+              opacity="0.9"
+            />
+          </svg>
+        </div>
+        <span
+          style={{
+            fontFamily: "'Permanent Marker', cursive",
+            fontSize: "1.6rem",
+            fontWeight: 700,
+            letterSpacing: "0.14em",
+            color: "#FEDD00",
+            WebkitTextFillColor: "#FEDD00",
+            display: "block",
+          }}
+        >
+          RWANDA
+        </span>
         <span
           style={{
             fontFamily: "'Permanent Marker', cursive",
@@ -47,11 +79,11 @@ export default function Navbar() {
           >
             <Link
               to={item.to}
-              className="text-sm font-medium text-text-secondary hover:text-white transition-colors duration-300 relative group"
+              className="text-sm font-medium text-text-secondary hover:text-rwanda-yellow transition-colors duration-300 relative group"
               style={{ textDecoration: "none" }}
             >
               {item.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-purple-400 group-hover:w-full transition-all duration-300" />
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-rwanda-blue to-rwanda-green group-hover:w-full transition-all duration-300" />
             </Link>
           </motion.div>
         ))}
@@ -64,10 +96,10 @@ export default function Navbar() {
         </Button>
         <Button variant="ghost" size="icon" className="hidden md:flex relative">
           <Bell className="w-4 h-4" />
-          <span className="absolute top-2 right-2 w-2 h-2 bg-purple-500 rounded-full" />
+          <span className="absolute top-2 right-2 w-2 h-2 bg-rwanda-yellow rounded-full" />
         </Button>
         <Link to="/signin">
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center cursor-pointer hover:shadow-lg hover:shadow-purple-500/25 transition-shadow duration-300">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-rwanda-blue to-rwanda-green flex items-center justify-center cursor-pointer hover:shadow-lg hover:shadow-rwanda-yellow/25 transition-shadow duration-300">
             <User className="w-4 h-4 text-white" />
           </div>
         </Link>

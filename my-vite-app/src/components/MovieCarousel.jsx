@@ -84,7 +84,7 @@ export default function MovieCarousel() {
                 {/* Play button overlay */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
                   <motion.div
-                    className="w-14 h-14 rounded-full bg-purple-600/90 backdrop-blur-sm flex items-center justify-center shadow-xl shadow-purple-500/30"
+                    className="w-14 h-14 rounded-full bg-rwanda-blue/90 backdrop-blur-sm flex items-center justify-center shadow-xl shadow-rwanda-yellow/30"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                   >

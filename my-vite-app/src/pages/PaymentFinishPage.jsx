@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-// ── Animation variants ────────────────────────────────────────────────────────
+// ── Animation helpers ─────────────────────────────────────────────────────────
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 22 },
   animate: { opacity: 1, y: 0 },
@@ -16,172 +16,190 @@ const fadeIn = (delay = 0) => ({
 
 export default function PaymentFinishPage() {
   return (
-    <>
-      {/* ── Google Font for sketch-style logo ─────────────────────── */}
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Outfit:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap');
-      `}</style>
-
+    <div
+      style={{
+        minHeight: "100vh",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "relative",
+        overflow: "hidden",
+        padding: "40px 16px",
+        background:
+          "linear-gradient(135deg, #07091a 0%, #0d0a1e 50%, #0a0c1c 100%)",
+        fontFamily: "'Inter', sans-serif",
+      }}
+    >
+      {/* ── Ambient glow — teal left ─────────────────────────────── */}
       <div
-        className="min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden px-4 py-10"
         style={{
+          position: "absolute",
+          left: 0,
+          top: "50%",
+          transform: "translate(-30%, -50%)",
+          width: "480px",
+          height: "480px",
+          borderRadius: "50%",
+          pointerEvents: "none",
           background:
-            "linear-gradient(135deg, #07091a 0%, #0d0a1e 50%, #0a0c1c 100%)",
-          fontFamily: "'Inter', sans-serif",
+            "radial-gradient(circle, rgba(13,148,136,0.35) 0%, transparent 70%)",
+          filter: "blur(80px)",
         }}
+      />
+
+      {/* ── Ambient glow — purple/pink right ─────────────────────── */}
+      <div
+        style={{
+          position: "absolute",
+          right: 0,
+          bottom: 0,
+          width: "520px",
+          height: "520px",
+          borderRadius: "50%",
+          pointerEvents: "none",
+          background:
+            "radial-gradient(circle, rgba(139,39,200,0.32) 0%, rgba(200,50,130,0.18) 50%, transparent 70%)",
+          filter: "blur(85px)",
+          transform: "translate(20%, 20%)",
+        }}
+      />
+
+      {/* ── MENYA AMATEKA Logo ─────── */}
+      <motion.div
+        style={{ position: "relative", zIndex: 10, marginBottom: "24px" }}
+        {...fadeIn(0.1)}
       >
-        {/* ── Ambient glow — teal left ─────────────────────────────── */}
-        <div
-          className="absolute left-0 top-1/2 -translate-y-1/2 pointer-events-none"
-          style={{
-            width: "480px",
-            height: "480px",
-            borderRadius: "50%",
-            background:
-              "radial-gradient(circle, rgba(13,148,136,0.35) 0%, transparent 70%)",
-            filter: "blur(80px)",
-            transform: "translate(-30%, -50%)",
-          }}
-        />
-
-        {/* ── Ambient glow — purple/pink right ─────────────────────── */}
-        <div
-          className="absolute right-0 bottom-0 pointer-events-none"
-          style={{
-            width: "520px",
-            height: "520px",
-            borderRadius: "50%",
-            background:
-              "radial-gradient(circle, rgba(139,39,200,0.32) 0%, rgba(200,50,130,0.18) 50%, transparent 70%)",
-            filter: "blur(85px)",
-            transform: "translate(20%, 20%)",
-          }}
-        />
-
-        {/* ── Subtle center vignette ───────────────────────────────── */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 60% 60% at 50% 50%, transparent 0%, rgba(7,9,26,0.4) 100%)",
-          }}
-        />
-
-        {/* ── STREAM logo ──────────────────────────────────────────── */}
-        <motion.div
-          className="relative z-10 mb-8"
-          {...fadeIn(0.1)}
-        >
-          <Link to="/">
-            <span
-              style={{
-                fontFamily: "'Permanent Marker', cursive",
-                fontSize: "2rem",
-                fontWeight: 700,
-                letterSpacing: "0.14em",
-                color: "#ffffff",
-                WebkitTextFillColor: "white",
-                display: "block",
-              }}
-            >
-              STREAM
-            </span>
-          </Link>
-        </motion.div>
-
-        {/* ── Cinematic image card ─────────────────────────────────── */}
-        <motion.div
-          className="relative z-10 w-full"
-          style={{ maxWidth: "360px" }}
-          {...fadeUp(0.2)}
-        >
-          <div
-            className="relative overflow-hidden"
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <span
             style={{
-              borderRadius: "16px",
-              boxShadow:
-                "0 24px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06)",
+              fontFamily: "'Permanent Marker', cursive",
+              fontSize: "2.2rem",
+              fontWeight: 700,
+              letterSpacing: "0.18em",
+              color: "#7c3aed",
+              textShadow: "0 0 30px rgba(124, 58, 237, 0.4)",
+              display: "block",
+              textAlign: "center",
             }}
           >
-            <img
-              src="/images/movie3.png"
-              alt="Audience enjoying a movie screening"
-              style={{
-                width: "100%",
-                height: "220px",
-                objectFit: "cover",
-                objectPosition: "center",
-                display: "block",
-              }}
-            />
-            {/* subtle inner overlay for depth */}
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                background:
-                  "linear-gradient(to bottom, rgba(7,9,26,0.05) 0%, rgba(7,9,26,0.28) 100%)",
-              }}
-            />
-          </div>
-        </motion.div>
+            MENYA AMATEKA
+          </span>
+        </Link>
+      </motion.div>
 
-        {/* ── Heading ──────────────────────────────────────────────── */}
-        <motion.h1
-          className="relative z-10 mt-8 text-center font-bold text-white"
+      {/* ── Image card — Rwandan culture image only ───────────────── */}
+      <motion.div
+        style={{
+          position: "relative",
+          zIndex: 10,
+          width: "100%",
+          maxWidth: "360px",
+        }}
+        {...fadeUp(0.2)}
+      >
+        <div
           style={{
-            fontFamily: "'Outfit', sans-serif",
-            fontSize: "clamp(1.75rem, 4vw, 2.25rem)",
-            lineHeight: 1.2,
-            letterSpacing: "-0.01em",
+            position: "relative",
+            overflow: "hidden",
+            borderRadius: "16px",
+            boxShadow:
+              "0 24px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06)",
           }}
-          {...fadeUp(0.35)}
         >
-          Payment Finish
-        </motion.h1>
+          <img
+            src="/images/payment-bg.png"
+            alt="Traditional Rwandan Intore dancers"
+            style={{
+              width: "100%",
+              height: "220px",
+              objectFit: "cover",
+              objectPosition: "center",
+              display: "block",
+            }}
+          />
+          {/* Subtle inner overlay for depth */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(to bottom, rgba(7,9,26,0.05) 0%, rgba(7,9,26,0.28) 100%)",
+            }}
+          />
+        </div>
+      </motion.div>
 
-        {/* ── Subtitle ─────────────────────────────────────────────── */}
-        <motion.p
-          className="relative z-10 mt-3 text-center"
-          style={{
-            color: "rgba(180,185,220,0.75)",
-            fontSize: "0.875rem",
-            lineHeight: 1.65,
-            maxWidth: "260px",
-          }}
-          {...fadeUp(0.45)}
-        >
-          Time to enjoy yourself to watch great movies from around the world
-        </motion.p>
+      {/* ── Heading ──────────────────────────────────────────────── */}
+      <motion.h1
+        style={{
+          position: "relative",
+          zIndex: 10,
+          marginTop: "28px",
+          textAlign: "center",
+          fontWeight: 700,
+          color: "#ffffff",
+          fontFamily: "'Outfit', sans-serif",
+          fontSize: "clamp(1.75rem, 4vw, 2.25rem)",
+          lineHeight: 1.2,
+          letterSpacing: "-0.01em",
+        }}
+        {...fadeUp(0.35)}
+      >
+        Payment Finish
+      </motion.h1>
 
-        {/* ── Watch Now CTA ─────────────────────────────────────────── */}
-        <motion.div
-          className="relative z-10 mt-7"
-          {...fadeUp(0.55)}
-        >
-          <Link to="/dashboard">
-            <motion.button
-              id="watch-now-btn"
-              className="px-10 py-3 rounded-full font-semibold text-sm text-white cursor-pointer select-none"
-              style={{
-                background:
-                  "linear-gradient(135deg, #5b21b6 0%, #7c3aed 50%, #6d28d9 100%)",
-                boxShadow: "0 4px 22px rgba(124,58,237,0.48)",
-                border: "none",
-                outline: "none",
-                fontFamily: "'Inter', sans-serif",
-              }}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 6px 30px rgba(124,58,237,0.65)",
-              }}
-              whileTap={{ scale: 0.96 }}
-            >
-              Watch Now
-            </motion.button>
-          </Link>
-        </motion.div>
-      </div>
-    </>
+      {/* ── Subtitle ─────────────────────────────────────────────── */}
+      <motion.p
+        style={{
+          position: "relative",
+          zIndex: 10,
+          marginTop: "12px",
+          textAlign: "center",
+          color: "rgba(180,185,220,0.75)",
+          fontSize: "0.875rem",
+          lineHeight: 1.65,
+          maxWidth: "280px",
+        }}
+        {...fadeUp(0.45)}
+      >
+        Time to enjoy yourself to watch great movies from around the world
+      </motion.p>
+
+      {/* ── Watch Now CTA ─────────────────────────────────────────── */}
+      <motion.div
+        style={{ position: "relative", zIndex: 10, marginTop: "28px" }}
+        {...fadeUp(0.55)}
+      >
+        <Link to="/dashboard" style={{ textDecoration: "none" }}>
+          <motion.button
+            id="watch-now-btn"
+            style={{
+              padding: "14px 40px",
+              borderRadius: "999px",
+              fontWeight: 600,
+              fontSize: "0.9rem",
+              color: "#ffffff",
+              cursor: "pointer",
+              fontFamily: "'Inter', sans-serif",
+              letterSpacing: "0.02em",
+              background:
+                "linear-gradient(135deg, #6366f1 0%, #7c3aed 50%, #6d28d9 100%)",
+              boxShadow: "0 4px 22px rgba(124,58,237,0.48)",
+              border: "none",
+              outline: "none",
+            }}
+            whileHover={{
+              scale: 1.05,
+              boxShadow: "0 6px 30px rgba(124,58,237,0.65)",
+            }}
+            whileTap={{ scale: 0.96 }}
+          >
+            Watch Now
+          </motion.button>
+        </Link>
+      </motion.div>
+    </div>
   );
 }

@@ -5,16 +5,31 @@ import { Link, useNavigate } from "react-router-dom";
 // ── Pricing plan data ─────────────────────────────────────────────────────────
 const plans = [
   {
+    id: "free",
+    name: "Free plan",
+    price: null,
+    period: null,
+    features: [
+      { text: "1 user limit", included: true },
+      { text: "up to 480 pxl", included: true },
+      { text: "Mobile Streaming", included: true },
+      { text: "20 videos Available", included: true },
+      { text: "No language translation", included: false },
+    ],
+    highlighted: false,
+    btnLabel: "Subscribe Now",
+  },
+  {
     id: "standard",
     name: "Standard",
-    price: "Rp 380.000",
-    period: "/bulan",
+    price: "30,000 FRW",
+    period: "/Month",
     features: [
-      "2 Users Limits",
-      "720 & 1080 Full HD",
-      "TV & Laptop Streaming",
-      "180 Movies Available",
-      "24 Origin Countries",
+      { text: "2 Users Limits", included: true },
+      { text: "720 & 1080 Full HD", included: true },
+      { text: "Mobile, TV & Laptop Streaming", included: true },
+      { text: "180 videos Available", included: true },
+      { text: "Up to 2 language translation", included: true },
     ],
     highlighted: false,
     btnLabel: "Subscribe Now",
@@ -22,21 +37,85 @@ const plans = [
   {
     id: "gold",
     name: "Gold",
-    price: "Rp 699.000",
-    period: "/bulan",
+    price: "80,000 FRW",
+    period: "/Month",
     features: [
-      "7 Users Limits",
-      "Up To 8K Quality",
-      "All Platforms Streaming",
-      "900+ Movies Available",
-      "120 Origin Countries",
+      { text: "7 Users Limits", included: true },
+      { text: "Up To 8K Quality", included: true },
+      { text: "All Platforms Streaming", included: true },
+      { text: "900+ videos Available", included: true },
+      { text: "Up to 20 language translation", included: true },
     ],
     highlighted: true,
     btnLabel: "Subscribe Now",
   },
 ];
 
-// ── Container animation ───────────────────────────────────────────────────────
+// ── Checkmark Icon ────────────────────────────────────────────────────────────
+function CheckIcon() {
+  return (
+    <span
+      style={{
+        flexShrink: 0,
+        width: "22px",
+        height: "22px",
+        borderRadius: "50%",
+        background: "#d1fae5",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <svg
+        style={{ width: "13px", height: "13px", color: "#059669" }}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="3.5"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M5 13l4 4L19 7"
+        />
+      </svg>
+    </span>
+  );
+}
+
+// ── Cross Icon ────────────────────────────────────────────────────────────────
+function CrossIcon() {
+  return (
+    <span
+      style={{
+        flexShrink: 0,
+        width: "22px",
+        height: "22px",
+        borderRadius: "50%",
+        background: "#fee2e2",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <svg
+        style={{ width: "12px", height: "12px", color: "#dc2626" }}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="3"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </span>
+  );
+}
+
+// ── Animation variants ────────────────────────────────────────────────────────
 const containerVariants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.15 } },
@@ -56,13 +135,19 @@ function PricingCard({ plan, onSubscribe }) {
       variants={cardVariants}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="relative rounded-[2rem] p-8 flex flex-col gap-6 items-center text-center transition-all duration-300"
       style={{
-        background: "#ffffff",
+        background: "rgba(255, 255, 255, 0.92)",
+        backdropFilter: "blur(12px)",
+        borderRadius: "16px",
+        padding: "28px 24px 22px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "0",
         boxShadow: hovered
           ? "0 28px 60px rgba(0,0,0,0.3)"
-          : "0 16px 40px rgba(0,0,0,0.18)",
+          : "0 12px 36px rgba(0,0,0,0.15)",
         transform: hovered ? "translateY(-4px)" : "translateY(0)",
+        transition: "all 0.3s ease",
         flex: "1 1 0",
         minWidth: 0,
         overflow: "hidden",
@@ -71,51 +156,79 @@ function PricingCard({ plan, onSubscribe }) {
     >
       {/* Plan name */}
       <h3
-        className="text-base font-bold text-gray-900 tracking-wide"
-        style={{ fontFamily: "'Inter', sans-serif" }}
+        style={{
+          fontSize: "1rem",
+          fontWeight: 700,
+          color: "#111827",
+          fontFamily: "'Inter', sans-serif",
+          marginBottom: plan.price ? "4px" : "18px",
+          fontStyle: plan.id === "free" ? "italic" : "normal",
+        }}
       >
         {plan.name}
       </h3>
 
       {/* Price section */}
-      <div className="flex flex-col">
-        <span
-          className="text-[2.2rem] font-bold text-gray-950 leading-none tracking-tight"
-          style={{ fontFamily: "'Outfit', sans-serif" }}
-        >
-          {plan.price}
-        </span>
-        <span className="text-xs text-gray-400 mt-1 font-medium">
-          {plan.period}
-        </span>
-      </div>
-
-      {/* Divider */}
-      <div className="h-px bg-gray-100" />
+      {plan.price && (
+        <div style={{ marginBottom: "18px" }}>
+          <span
+            style={{
+              fontSize: "1.6rem",
+              fontWeight: 700,
+              color: "#111827",
+              fontFamily: "'Outfit', sans-serif",
+              lineHeight: 1,
+            }}
+          >
+            {plan.price}
+          </span>
+          <span
+            style={{
+              fontSize: "0.8rem",
+              color: "#9ca3af",
+              fontWeight: 500,
+              marginLeft: "2px",
+            }}
+          >
+            {plan.period}
+          </span>
+        </div>
+      )}
 
       {/* Features */}
-      <ul className="flex flex-col gap-4 items-center">
+      <ul
+        style={{
+          listStyle: "none",
+          padding: 0,
+          margin: 0,
+          display: "flex",
+          flexDirection: "column",
+          gap: "14px",
+          marginBottom: "20px",
+          flex: 1,
+        }}
+      >
         {plan.features.map((feat) => (
-          <li key={feat} className="flex flex-col items-center">
-            <span className="text-sm font-medium text-gray-800">{feat}</span>
+          <li
+            key={feat.text}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "10px",
+            }}
+          >
             <span
-              className="mt-2 flex-shrink-0 w-[22px] h-[22px] rounded-full flex items-center justify-center"
-              style={{ background: "#d1fae5" }}
+              style={{
+                fontSize: "0.82rem",
+                fontWeight: 500,
+                color: "#374151",
+                fontFamily: "'Inter', sans-serif",
+              }}
             >
-              <svg
-                className="w-3.5 h-3.5 text-emerald-600"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3.5"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
+              {feat.text}
             </span>
+            {feat.included ? <CheckIcon /> : <CrossIcon />}
           </li>
         ))}
       </ul>
@@ -124,31 +237,45 @@ function PricingCard({ plan, onSubscribe }) {
       <motion.button
         id={`subscribe-${plan.id}-btn`}
         onClick={onSubscribe}
-        className="mt-2 w-full py-3.5 rounded-full font-semibold text-sm cursor-pointer select-none transition-all duration-200"
         style={
           plan.highlighted
             ? {
-                background: "#4f46e5",
-                color: "#ffffff",
+                width: "100%",
+                padding: "12px 0",
+                borderRadius: "999px",
+                background:
+                  "linear-gradient(135deg, #06b6d4 0%, #6366f1 50%, #7c3aed 100%)",
                 border: "none",
-                boxShadow: "0 4px 18px rgba(79,70,229,0.35)",
-                marginBottom: "6px",
+                fontSize: "14px",
+                fontWeight: 600,
+                color: "#ffffff",
+                cursor: "pointer",
+                boxShadow: "0 4px 18px rgba(99,102,241,0.35)",
+                fontFamily: "'Inter', sans-serif",
+                letterSpacing: "0.01em",
               }
             : {
+                width: "100%",
+                padding: "12px 0",
+                borderRadius: "999px",
                 background: "#ffffff",
+                border: "1.5px solid #d1d5db",
+                fontSize: "14px",
+                fontWeight: 500,
                 color: "#9ca3af",
-                border: "1.5px solid #e5e7eb",
-                marginBottom: "6px",
+                cursor: "pointer",
+                fontFamily: "'Inter', sans-serif",
+                letterSpacing: "0.01em",
               }
         }
         whileHover={
           plan.highlighted
             ? {
-                scale: 1.02,
-                background: "#4338ca",
+                scale: 1.03,
+                boxShadow: "0 8px 28px rgba(99,102,241,0.45)",
               }
             : {
-                scale: 1.02,
+                scale: 1.03,
                 borderColor: "#9ca3af",
                 color: "#4b5563",
               }
@@ -171,176 +298,187 @@ export default function PricingPage() {
 
   return (
     <div
-      className="min-h-screen flex"
-      style={{ fontFamily: "'Inter', sans-serif" }}
+      style={{
+        minHeight: "100vh",
+        position: "relative",
+        overflow: "hidden",
+        fontFamily: "'Inter', sans-serif",
+      }}
     >
-      {/* ── LEFT PANEL ────────────────────────────────────────────── */}
-      <div className="hidden md:flex md:w-[30%] relative flex-col justify-end overflow-hidden">
-        {/* Cozy living room / TV viewing background */}
-        <img
-          src="/images/movie4.png"
-          alt="Cozy viewing atmosphere"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
-
-        {/* Dark gradient overlay */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(5,8,20,0.15) 0%, rgba(5,8,20,0.42) 45%, rgba(5,8,20,0.90) 100%)",
-          }}
-        />
-
-        {/* Subtle orange/sunset warm tint */}
-        <div
-          className="absolute inset-0 opacity-25"
-          style={{
-            background: "linear-gradient(160deg, #c0392b 0%, #d35400 100%)",
-          }}
-        />
-
-        {/* Testimonial */}
-        <motion.div
-          className="relative z-10 p-8 pb-10"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-        >
-          <p className="text-white/90 text-sm leading-relaxed mb-4">
-            Strean helps us to maintain our relationship to become much much
-            better than previously
-          </p>
-          <p className="text-white font-bold text-sm tracking-wide">
-            Janne Malayika
-          </p>
-        </motion.div>
-      </div>
-
-      {/* ── RIGHT PANEL ───────────────────────────────────────────── */}
+      {/* ── Full Background Image ──────────────────────────────────── */}
       <div
-        className="flex-1 flex flex-col px-8 md:px-14 py-7 relative overflow-hidden"
         style={{
-          background:
-            "linear-gradient(135deg, #08091a 0%, #0d0a20 55%, #0a0d1e 100%)",
+          position: "absolute",
+          inset: 0,
+          zIndex: 0,
         }}
       >
-        {/* Purple glow — bottom right */}
-        <div
-          className="absolute -right-32 bottom-0 w-[600px] h-[600px] rounded-full pointer-events-none"
+        <img
+          src="/images/pricing-bg.png"
+          alt="Traditional Rwandan storytelling"
           style={{
-            background:
-              "radial-gradient(circle, rgba(109,40,217,0.22) 0%, transparent 70%)",
-            filter: "blur(72px)",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
           }}
         />
-        {/* Teal glow — top left */}
-        <div
-          className="absolute -left-24 top-0 w-[320px] h-[320px] rounded-full pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(13,148,136,0.1) 0%, transparent 70%)",
-            filter: "blur(55px)",
-          }}
-        />
-
-        {/* ── TOP BAR ─────────────────────────────────────────────── */}
-        <div className="relative z-10 flex items-center justify-between mb-6">
-          {/* STREAM logo */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <Link to="/">
-              <span
-                  style={{
-                    fontFamily: "'Permanent Marker', 'Outfit', cursive",
-                    fontSize: "2rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.18em",
-                    color: "#ffffff",
-                    WebkitTextFillColor: "white",
-                    display: "block",
-                  }}
-                >
-                  STREAM
-                </span>
-            </Link>
-          </motion.div>
-
-          {/* Avatar / profile button */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4, delay: 0.2 }}
-            className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer hover:shadow-lg hover:shadow-white/10 transition-shadow duration-300"
-            style={{
-              background: "#d1d5db",
-              border: "1.5px solid #ffffff",
-            }}
-          />
-        </div>
-
-        {/* ── CENTER CONTENT ──────────────────────────────────────── */}
-        <div className="relative z-10 flex flex-col items-center justify-center flex-1">
-          {/* Eyebrow label */}
-          <motion.p
-            className="text-xs font-bold uppercase tracking-[0.28em] mb-3 text-center"
-            style={{ color: "#4fc3f7" }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.25 }}
-          >
-            Start Your Day
-          </motion.p>
-
-          {/* Heading */}
-          <motion.h1
-            className="text-3xl md:text-[2.2rem] font-bold text-white mb-8 text-center"
-            style={{ fontFamily: "'Outfit', sans-serif" }}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.35 }}
-          >
-            Up Your Imagination
-          </motion.h1>
-
-          {/* Pricing cards */}
-          <motion.div
-            className="w-full max-w-[680px] grid grid-cols-1 sm:grid-cols-2 gap-6"
-            variants={containerVariants}
-            initial="hidden"
-            animate="show"
-          >
-            {plans.map((plan) => (
-              <PricingCard
-                key={plan.id}
-                plan={plan}
-                onSubscribe={handleSubscribe}
-              />
-            ))}
-          </motion.div>
-
-          {/* Footer nav hint */}
-          <motion.p
-            className="text-center text-sm mt-8"
-            style={{ color: "rgba(255,255,255,0.6)" }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-          >
-            Already subscribed?{" "}
-            <Link
-              to="/signin"
-              className="font-semibold transition-colors"
-              style={{ color: "#a78bfa" }}
-            >
-              Sign In
-            </Link>
-          </motion.p>
-        </div>
       </div>
+
+      {/* Dark overlay */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 1,
+          background: `
+            linear-gradient(
+              to bottom,
+              rgba(8, 5, 25, 0.6) 0%,
+              rgba(8, 5, 25, 0.45) 40%,
+              rgba(8, 5, 25, 0.5) 70%,
+              rgba(8, 5, 25, 0.7) 100%
+            )
+          `,
+        }}
+      />
+
+      {/* ── Content ────────────────────────────────────────────────── */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 10,
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          padding: "40px 24px 40px",
+        }}
+      >
+        {/* ── MENYA AMATEKA Logo ─────── */}
+        <motion.div
+          style={{ textAlign: "center", marginBottom: "20px" }}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <span
+              style={{
+                fontFamily: "'Permanent Marker', cursive",
+                fontSize: "2.2rem",
+                fontWeight: 700,
+                letterSpacing: "0.18em",
+                color: "#7c3aed",
+                textShadow: "0 0 30px rgba(124, 58, 237, 0.4)",
+                display: "block",
+              }}
+            >
+              MENYA AMATEKA
+            </span>
+          </Link>
+        </motion.div>
+
+        {/* ── Eyebrow label ─────── */}
+        <motion.p
+          style={{
+            fontSize: "0.7rem",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.3em",
+            color: "#06b6d4",
+            marginBottom: "10px",
+            textAlign: "center",
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          START YOUR DAY
+        </motion.p>
+
+        {/* ── Heading ─────── */}
+        <motion.h1
+          style={{
+            fontSize: "clamp(1.8rem, 4vw, 2.5rem)",
+            fontWeight: 700,
+            color: "#ffffff",
+            fontFamily: "'Outfit', sans-serif",
+            marginBottom: "36px",
+            textAlign: "center",
+            textShadow: "0 2px 20px rgba(0,0,0,0.3)",
+          }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          Up Your Imagination
+        </motion.h1>
+
+        {/* ── Pricing Cards ─────── */}
+        <motion.div
+          style={{
+            width: "100%",
+            maxWidth: "900px",
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: "20px",
+            marginBottom: "32px",
+          }}
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+        >
+          {plans.map((plan) => (
+            <PricingCard
+              key={plan.id}
+              plan={plan}
+              onSubscribe={handleSubscribe}
+            />
+          ))}
+        </motion.div>
+
+        {/* Footer nav */}
+        <motion.p
+          style={{
+            textAlign: "center",
+            fontSize: "13px",
+            color: "rgba(255,255,255,0.6)",
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+        >
+          Already subscribed?{" "}
+          <Link
+            to="/signin"
+            style={{
+              fontWeight: 600,
+              color: "#a78bfa",
+              textDecoration: "none",
+            }}
+          >
+            Sign In
+          </Link>
+        </motion.p>
+      </div>
+
+      {/* ── Responsive: stack cards on mobile ─────── */}
+      <style>{`
+        @media (max-width: 768px) {
+          div[style*="grid-template-columns: repeat(3"] {
+            grid-template-columns: 1fr !important;
+            max-width: 400px !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+          }
+        }
+        @media (min-width: 769px) and (max-width: 1024px) {
+          div[style*="grid-template-columns: repeat(3"] {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

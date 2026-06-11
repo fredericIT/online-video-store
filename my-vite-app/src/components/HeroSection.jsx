@@ -9,21 +9,36 @@ export default function HeroSection() {
       id="hero"
       className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-12 overflow-hidden"
     >
-      {/* Background glow effects */}
+      {/* Background glow effects - Rwandan colors */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-purple-600/8 rounded-full blur-[120px]" />
-        <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-indigo-600/6 rounded-full blur-[100px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-purple-500/5 rounded-full blur-[80px]" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-rwanda-blue/8 rounded-full blur-[120px]" />
+        <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-rwanda-yellow/6 rounded-full blur-[100px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-rwanda-green/5 rounded-full blur-[80px]" />
       </div>
 
-      {/* Floating particles */}
+      {/* Imigongo-inspired geometric pattern overlay */}
+      <div className="absolute inset-0 pointer-events-none opacity-5">
+        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="imigongo" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+              <rect width="100" height="100" fill="none"/>
+              <path d="M0 0 L50 50 L100 0 M50 50 L100 100 L50 100 L0 100 Z" stroke="#FEDD00" strokeWidth="2" fill="none"/>
+              <circle cx="50" cy="50" r="20" stroke="#00A651" strokeWidth="2" fill="none"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#imigongo)"/>
+        </svg>
+      </div>
+
+      {/* Floating particles - Rwandan colors */}
       {[...Array(6)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-1 h-1 bg-purple-400/30 rounded-full"
+          className="absolute w-1 h-1 rounded-full"
           style={{
             top: `${20 + Math.random() * 60}%`,
             left: `${10 + Math.random() * 80}%`,
+            backgroundColor: i % 3 === 0 ? '#00A1DE' : i % 3 === 1 ? '#FEDD00' : '#00A651',
           }}
           animate={{
             y: [0, -30, 0],
@@ -45,8 +60,8 @@ export default function HeroSection() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <Badge className="mb-6 gap-1.5">
-            <Sparkles className="w-3 h-3" />
+          <Badge className="mb-6 gap-1.5" style={{ backgroundColor: 'rgba(254, 221, 0, 0.2)', borderColor: '#FEDD00' }}>
+            <Sparkles className="w-3 h-3" style={{ color: '#FEDD00' }} />
             Start Streaming
           </Badge>
         </motion.div>
@@ -58,11 +73,10 @@ export default function HeroSection() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.3 }}
         >
-          Get More Inspired{" "}
+          Experience Rwandan{" "}
           <br className="hidden sm:block" />
-          Watching{" "}
-          <span className="bg-gradient-to-r from-purple-400 via-purple-300 to-indigo-400 bg-clip-text text-transparent">
-            Great Movies
+          <span className="bg-gradient-to-r from-rwanda-blue via-rwanda-yellow to-rwanda-green bg-clip-text text-transparent">
+            Cinema & Culture
           </span>
         </motion.h1>
 
@@ -73,8 +87,8 @@ export default function HeroSection() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
-          Experience the world of entertainment at its finest. Stream thousands
-          of movies and series in stunning quality, anytime, anywhere.
+          Discover the rich storytelling tradition of Rwanda. Stream thousands of movies,
+          documentaries, and cultural content celebrating African heritage.
         </motion.p>
 
         {/* CTA Buttons */}

@@ -8,6 +8,8 @@ import DashboardPage from "./pages/DashboardPage";
 import MovieDetailPage from "./pages/MovieDetailPage";
 import SubscriptionPage from "./pages/SubscriptionPage";
 import DiscoverPage from "./pages/DiscoverPage";
+import FavoritesPage from "./pages/FavoritesPage";
+import YourGiftPage from "./pages/YourGiftPage";
 
 export default function App() {
   return (
@@ -22,6 +24,8 @@ export default function App() {
         <Route path="/movie-detail" element={<MovieDetailPage />} />
         <Route path="/subscription" element={<SubscriptionPage />} />
         <Route path="/discover" element={<DiscoverPage />} />
+        <Route path="/favorites" element={<FavoritesPage />} />
+        <Route path="/your-gift" element={<YourGiftPage />} />
       </Routes>
     </BrowserRouter>
   );
